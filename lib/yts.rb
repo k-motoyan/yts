@@ -1,0 +1,7 @@
+require "yts/cli"
+require "yts/swagger"
+require "yts/command/init"
+require "yts/command/gen"
+require "yts/command/convert"
+require "yts/command/serve"
+require "yts/command/document"
