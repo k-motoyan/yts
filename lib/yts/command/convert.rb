@@ -36,6 +36,11 @@ module YTS
 
             props = props_from_methods c.meths
             @swagger.set_definition(definition, props) unless props.empty?
+          when  /^Endpoint::Headers::(GET|POST|PUT|PATCH|DELETE)$/
+            method = $1.downcase
+            path = File.basename(c.file, ".rb").split("_").map(&:downcase).join("/")
+            props = props_from_methods c.meths
+            @swagger.set_headers(path, method, props)
           when "Entity"
             definition = c.name.to_s
             props = props_from_methods c.meths

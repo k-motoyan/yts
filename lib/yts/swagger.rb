@@ -41,6 +41,30 @@ module YTS
       }
     end
 
+    def set_headers(path, method, props)
+      path = File.join "/", path
+      @schema[:paths][path] ||= {}
+      @schema[:paths][path][method] ||= {}
+      @schema[:paths][path][method][:parameters] ||= []
+
+      props.each do |prop|
+        type =
+          case prop[:type]
+          when "Boolean", "String", "Integer", "Float", "Date", "Time" then
+            @@scalar_type_map[prop[:type]]
+          when /Array<(.+)>/
+            { type: :array, items: $1 }
+          end
+
+        @schema[:paths][path][method][:parameters] << {
+          in: "header",
+          name: prop[:name].to_s.gsub("_", "-").upcase,
+          description: prop[:desc],
+          schema: type
+        }
+      end
+    end
+
     def set_parameters(path, method, api_info, definition)
       path = File.join "/", path
       @schema[:paths][path] ||= {}
