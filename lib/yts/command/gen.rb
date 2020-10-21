@@ -41,6 +41,35 @@ module YTS
               end
             end
 
+            module Headers
+              module #{@class_name}HeaderBase
+              end
+
+              module GET
+                class #{@class_name}Header
+                  include ::Endpoint::Headers::#{@class_name}HeaderBase
+                end
+              end
+
+              module POST
+                class #{@class_name}Header
+                  include ::Endpoint::Headers::#{@class_name}HeaderBase
+                end
+              end
+
+              module PATCH
+                class #{@class_name}Header
+                  include ::Endpoint::Headers::#{@class_name}HeaderBase
+                end
+              end
+
+              module DELETE
+                class #{@class_name}Header
+                  include ::Endpoint::Headers::#{@class_name}HeaderBase
+                end
+              end
+            end
+
             module Parameters
               # #{@class_name} get request parameter
               # @api { required: true, name: "get" }
