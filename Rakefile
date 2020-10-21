@@ -8,3 +8,9 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task :default => :test
+
+task :serve do
+  system "bin/yts convert > doc/swagger.json"
+  system "bin/yts document -i doc/swagger.json"
+  system "bin/yts serve -s doc/swagger.html"
+end

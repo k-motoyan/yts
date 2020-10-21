@@ -19,17 +19,17 @@ module YTS
           when  /^Endpoint::(GET|POST|PUT|PATCH|DELETE)$/
             method = $1.downcase
             path = File.basename(c.file, ".rb").split("_").map(&:downcase).join("/")
-            definition = c.name.to_s
+            definition = "#{c.name.to_s}-#{$1}"
             api_info = eval(c.tag(:api).text)
             api_info[:description] = c.docstring.to_s
             @swagger.set_path(path, method, api_info, definition)
 
             props = props_from_methods c.meths
             @swagger.set_definition(definition, props) unless props.empty?
-          when  /^Endpoint::(GET|POST|PUT|PATCH|DELETE)::Parameters$/
+          when  /^Endpoint::Parameters::(GET|POST|PUT|PATCH|DELETE)$/
             method = $1.downcase
             path = File.basename(c.file, ".rb").split("_").map(&:downcase).join("/")
-            definition = c.name.to_s
+            definition = "#{c.name.to_s}-#{$1}"
             api_info = eval(c.tag(:api).text)
             api_info[:description] = c.docstring.to_s
             @swagger.set_parameters(path, method, api_info, definition)
